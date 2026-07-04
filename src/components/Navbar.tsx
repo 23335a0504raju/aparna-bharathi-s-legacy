@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Play, Pause } from "lucide-react";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
 
-const links = [
-  { id: "home", label: "Home" },
-  { id: "their-work", label: "Their Work" },
-  { id: "their-bond", label: "Their Bond" },
-  { id: "journey", label: "Journey" },
-  { id: "family", label: "Family" },
-  { id: "gallery", label: "Gallery" },
+type NavLink =
+  | { kind: "scroll"; id: string; label: string }
+  | { kind: "route"; to: "/journey"; label: string };
+
+const links: NavLink[] = [
+  { kind: "scroll", id: "home", label: "Home" },
+  { kind: "scroll", id: "their-work", label: "Their Work" },
+  { kind: "scroll", id: "their-bond", label: "Their Bond" },
+  { kind: "route", to: "/journey", label: "Journey" },
+  { kind: "scroll", id: "family", label: "Family" },
+  { kind: "scroll", id: "gallery", label: "Gallery" },
 ];
 
 const INK = "#17130F";
@@ -24,6 +29,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const navigate = useNavigate();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [audio] = useState(() => {
     if (typeof Audio === "undefined") return null;
     const a = new Audio("/audio/background.mp3");
@@ -50,9 +57,22 @@ export default function Navbar() {
     }
   };
 
-  const handleNav = (id: string) => {
+  const handleScrollNav = (id: string) => {
     setOpen(false);
+    if (pathname !== "/") {
+      // Route home first, then scroll after navigation.
+      navigate({ to: "/" }).then(() => {
+        // Wait a tick for the home page to mount.
+        setTimeout(() => smoothScroll(id), 60);
+      });
+      return;
+    }
     smoothScroll(id);
+  };
+
+  const handleRouteNav = (to: "/journey") => {
+    setOpen(false);
+    navigate({ to });
   };
 
   // Text stays cream over the ink hero, and stays cream on the translucent ink bar after scroll.
@@ -75,7 +95,7 @@ export default function Navbar() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-10 md:py-5">
         <button
-          onClick={() => handleNav("home")}
+          onClick={() => handleScrollNav("home")}
           className="font-sans-ui flex items-center gap-2 text-sm font-medium tracking-tight md:text-[15px]"
           style={{ color: textColor }}
         >
@@ -85,22 +105,27 @@ export default function Navbar() {
         </button>
 
         <nav className="hidden items-center gap-1 md:flex">
-          {links.map((l) => (
-            <button
-              key={l.id}
-              onClick={() => handleNav(l.id)}
-              className="group relative px-3 py-2 text-[13px] font-medium tracking-tight transition-opacity"
-              style={{ color: textColor, opacity: 0.75 }}
-            >
-              <span className="transition-opacity group-hover:opacity-100">
-                {l.label}
-              </span>
-              <span
-                className="pointer-events-none absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
-                style={{ background: TERRA }}
-              />
-            </button>
-          ))}
+          {links.map((l) => {
+            const key = l.kind === "route" ? l.to : l.id;
+            const onClick = () =>
+              l.kind === "route" ? handleRouteNav(l.to) : handleScrollNav(l.id);
+            return (
+              <button
+                key={key}
+                onClick={onClick}
+                className="group relative px-3 py-2 text-[13px] font-medium tracking-tight transition-opacity"
+                style={{ color: textColor, opacity: 0.75 }}
+              >
+                <span className="transition-opacity group-hover:opacity-100">
+                  {l.label}
+                </span>
+                <span
+                  className="pointer-events-none absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
+                  style={{ background: TERRA }}
+                />
+              </button>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -145,19 +170,26 @@ export default function Navbar() {
             }}
           >
             <div className="flex flex-col px-6 py-2">
-              {links.map((l) => (
-                <button
-                  key={l.id}
-                  onClick={() => handleNav(l.id)}
-                  className="border-b py-3 text-left text-sm font-medium tracking-tight"
-                  style={{
-                    color: CREAM,
-                    borderColor: "rgba(244,237,225,0.08)",
-                  }}
-                >
-                  {l.label}
-                </button>
-              ))}
+              {links.map((l) => {
+                const key = l.kind === "route" ? l.to : l.id;
+                const onClick = () =>
+                  l.kind === "route"
+                    ? handleRouteNav(l.to)
+                    : handleScrollNav(l.id);
+                return (
+                  <button
+                    key={key}
+                    onClick={onClick}
+                    className="border-b py-3 text-left text-sm font-medium tracking-tight"
+                    style={{
+                      color: CREAM,
+                      borderColor: "rgba(244,237,225,0.08)",
+                    }}
+                  >
+                    {l.label}
+                  </button>
+                );
+              })}
             </div>
           </motion.nav>
         )}
