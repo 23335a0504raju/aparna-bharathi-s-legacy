@@ -165,7 +165,36 @@
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
     position: relative;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
+
+  html {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* Subtle, on-brand scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(194, 94, 58, 0.5) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: rgba(194, 94, 58, 0.45);
+    border-radius: 999px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgba(194, 94, 58, 0.7);
+  }
+  /* Never allow horizontal page scroll */
+  html, body { overscroll-behavior-x: none; }
 
   /* Site-wide subtle film grain */
   body::before {
