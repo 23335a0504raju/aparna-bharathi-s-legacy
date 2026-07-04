@@ -7,7 +7,7 @@ interface SectionProps {
   titleEn: string;
   titleTe: string;
   children?: ReactNode;
-  tone?: "ivory" | "maroon" | "warm";
+  tone?: "ivory" | "emerald" | "warm";
 }
 
 export default function Section({
@@ -19,13 +19,13 @@ export default function Section({
   tone = "ivory",
 }: SectionProps) {
   const bg =
-    tone === "maroon"
-      ? "linear-gradient(180deg, #6E1423 0%, #4a0d17 100%)"
+    tone === "emerald"
+      ? "linear-gradient(180deg, #0E5A43 0%, #0A3D2E 100%)"
       : tone === "warm"
       ? "linear-gradient(180deg, #FBF4E6 0%, #f6ecd4 100%)"
       : "transparent";
-  const fg = tone === "maroon" ? "#FBF4E6" : "#2B211C";
-  const sub = tone === "maroon" ? "#f0dfa8" : "#6b5d52";
+  const fg = tone === "emerald" ? "#FBF4E6" : "#2B211C";
+  const sub = tone === "emerald" ? "#f0dfa8" : "#6b5d52";
 
   return (
     <section
@@ -43,7 +43,7 @@ export default function Section({
         {eyebrow && (
           <p
             className="mb-4 text-[0.7rem] font-medium uppercase tracking-[0.35em]"
-            style={{ color: "#C79A3B" }}
+            style={{ color: "#C9A24B" }}
           >
             {eyebrow}
           </p>
@@ -54,7 +54,7 @@ export default function Section({
         </h2>
         <p
           className="font-telugu mt-3 text-2xl md:text-3xl"
-          style={{ color: tone === "maroon" ? "#D4AF37" : "#6E1423" }}
+          style={{ color: tone === "emerald" ? "#D4AF37" : "#0E5A43" }}
         >
           {titleTe}
         </p>
@@ -63,12 +63,12 @@ export default function Section({
         <div
           className="mx-auto mt-12 max-w-xl rounded-3xl border p-8 md:p-10"
           style={{
-            borderColor: "rgba(199,154,59,0.4)",
+            borderColor: "rgba(201,162,75,0.4)",
             background:
-              tone === "maroon"
+              tone === "emerald"
                 ? "rgba(251,244,230,0.05)"
                 : "rgba(255,255,255,0.6)",
-            boxShadow: "0 10px 40px -12px rgba(110, 20, 35, 0.18)",
+            boxShadow: "0 10px 40px -12px rgba(14, 90, 67, 0.22)",
             backdropFilter: "blur(4px)",
           }}
         >

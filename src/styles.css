@@ -65,10 +65,11 @@
   --radius: 0.625rem;
   --background: #FBF4E6;
   --foreground: #2B211C;
-  --maroon: #6E1423;
-  --maroon-deep: #4a0d17;
-  --gold: #C79A3B;
+  --emerald: #0E5A43;
+  --emerald-deep: #0A3D2E;
+  --gold: #C9A24B;
   --gold-bright: #D4AF37;
+  --coral: #E07856;
   --ivory: #FBF4E6;
   --ivory-warm: #f6ecd4;
   --charcoal: #2B211C;
@@ -76,26 +77,26 @@
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: #6E1423;
+  --primary: #0E5A43;
   --primary-foreground: #FBF4E6;
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
   --muted: oklch(0.968 0.007 247.896);
   --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: #C79A3B;
+  --accent: #C9A24B;
   --accent-foreground: #2B211C;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: rgba(199, 154, 59, 0.35);
+  --border: rgba(201, 162, 75, 0.35);
   --input: oklch(0.929 0.013 255.508);
-  --ring: #C79A3B;
+  --ring: #C9A24B;
   --font-serif: 'Playfair Display', ui-serif, Georgia, serif;
   --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
   --font-telugu: 'Noto Serif Telugu', 'Noto Sans Telugu', serif;
   --gradient-hero: radial-gradient(ellipse at top, #f8e6b8 0%, #FBF4E6 55%, #f0dfa8 100%);
-  --gradient-maroon: linear-gradient(135deg, #6E1423 0%, #4a0d17 100%);
-  --shadow-soft: 0 10px 40px -12px rgba(110, 20, 35, 0.18);
-  --shadow-gold: 0 8px 30px -10px rgba(199, 154, 59, 0.45);
+  --gradient-emerald: linear-gradient(135deg, #0E5A43 0%, #0A3D2E 100%);
+  --shadow-soft: 0 10px 40px -12px rgba(14, 90, 67, 0.22);
+  --shadow-gold: 0 8px 30px -10px rgba(201, 162, 75, 0.45);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -156,8 +157,8 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     background-image:
-      radial-gradient(circle at 20% 10%, rgba(199, 154, 59, 0.08) 0, transparent 40%),
-      radial-gradient(circle at 80% 90%, rgba(110, 20, 35, 0.06) 0, transparent 45%),
+      radial-gradient(circle at 20% 10%, rgba(201, 162, 75, 0.08) 0, transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(14, 90, 67, 0.06) 0, transparent 45%),
       url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.42  0 0 0 0 0.32  0 0 0 0 0.18  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   }
 
@@ -170,7 +171,7 @@
   .font-serif-display { font-family: var(--font-serif); }
 
   ::selection {
-    background: #C79A3B;
+    background: #C9A24B;
     color: #2B211C;
   }
 }
@@ -180,13 +181,13 @@
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  color: #C79A3B;
+  color: #C9A24B;
 
   &::before, &::after {
     content: "";
     flex: 1;
     max-width: 6rem;
     height: 1px;
-    background: linear-gradient(90deg, transparent, #C79A3B, transparent);
+    background: linear-gradient(90deg, transparent, #C9A24B, transparent);
   }
 }

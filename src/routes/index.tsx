@@ -26,7 +26,7 @@ function Index() {
           eyebrow="Chapter Two"
           titleEn="Their Bond"
           titleTe="వారి అనుబంధం"
-          tone="maroon"
+          tone="emerald"
         />
         <Section
           id="journey"
@@ -40,7 +40,7 @@ function Index() {
           eyebrow="Chapter Four"
           titleEn="Family"
           titleTe="కుటుంబం"
-          tone="maroon"
+          tone="emerald"
         />
         <Section
           id="gallery"
