@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Play, Pause } from "lucide-react";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
@@ -31,13 +31,7 @@ export default function Navbar() {
   const [playing, setPlaying] = useState(false);
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const [audio] = useState(() => {
-    if (typeof Audio === "undefined") return null;
-    const a = new Audio("/audio/background.mp3");
-    a.loop = true;
-    a.volume = 0.4;
-    return a;
-  });
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -47,6 +41,7 @@ export default function Navbar() {
   }, []);
 
   const toggleMusic = () => {
+    const audio = audioRef.current;
     if (!audio) return;
     if (playing) {
       audio.pause();
@@ -132,15 +127,34 @@ export default function Navbar() {
           <button
             onClick={toggleMusic}
             aria-label={playing ? "Pause music" : "Play music"}
-            className="grid h-9 w-9 place-items-center rounded-full border transition-all hover:scale-105"
+            className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-full border transition-all hover:scale-105"
             style={{
               borderColor: "rgba(244,237,225,0.2)",
               color: textColor,
               background: "rgba(244,237,225,0.05)",
             }}
           >
-            {playing ? <Pause size={14} /> : <Play size={14} />}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={playing ? "pause" : "play"}
+                initial={{ opacity: 0, scale: 0.6, rotate: -30 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                exit={{ opacity: 0, scale: 0.6, rotate: 30 }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0 grid place-items-center"
+              >
+                {playing ? <Pause size={14} /> : <Play size={14} />}
+              </motion.span>
+            </AnimatePresence>
           </button>
+
+          <audio
+            ref={audioRef}
+            src="/audio/background-music.mp3"
+            loop
+            preload="none"
+            aria-hidden
+          />
 
           <button
             onClick={() => setOpen((v) => !v)}
