@@ -6,7 +6,7 @@ export default function Footer() {
       id="footer"
       className="relative w-full px-5 py-16 text-center md:px-10"
       style={{
-        background: "linear-gradient(180deg, #4a0d17 0%, #2B211C 100%)",
+        background: "linear-gradient(180deg, #0A3D2E 0%, #2B211C 100%)",
         color: "#FBF4E6",
       }}
     >
@@ -19,7 +19,7 @@ export default function Footer() {
       >
         <div className="gold-divider mb-6" aria-hidden />
         <p className="font-serif-display text-2xl italic md:text-3xl">
-          Apparao <span style={{ color: "#D4AF37" }}>❤</span> Bharathi
+          Apparao <span style={{ color: "#E07856" }}>❤</span> Bharathi
         </p>
         <p
           className="font-telugu mt-2 text-lg"
