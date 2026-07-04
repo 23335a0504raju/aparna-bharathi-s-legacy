@@ -4,7 +4,7 @@ import { Menu, X, Play, Pause } from "lucide-react";
 
 const links = [
   { id: "home", label: "Home" },
-  { id: "work", label: "Their Work" },
+  { id: "their-work", label: "Their Work" },
   { id: "bond", label: "Their Bond" },
   { id: "journey", label: "Journey" },
   { id: "family", label: "Family" },

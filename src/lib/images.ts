@@ -9,6 +9,22 @@ export const IMAGES = {
     src: "/images/mom-portrait.jpg",
     alt: "Portrait of Bharathi, mother",
   },
+  momWork1: {
+    src: "/images/mom-work-1.jpg",
+    alt: "Bharathi at home, caring for the household",
+  },
+  momWork2: {
+    src: "/images/mom-work-2.jpg",
+    alt: "Bharathi ironing clothes for the neighbourhood",
+  },
+  dadWork1: {
+    src: "/images/dad-work-1.jpg",
+    alt: "Apparao at work at Coromandel",
+  },
+  dadWork2: {
+    src: "/images/dad-work-2.jpg",
+    alt: "Apparao during a working day",
+  },
   couple: {
     src: "/images/couple.jpg",
     alt: "Apparao and Bharathi together",
