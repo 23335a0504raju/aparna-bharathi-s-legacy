@@ -63,40 +63,38 @@
 
 :root {
   --radius: 0.625rem;
-  --background: #FBF4E6;
-  --foreground: #2B211C;
-  --emerald: #0E5A43;
-  --emerald-deep: #0A3D2E;
-  --gold: #C9A24B;
-  --gold-bright: #D4AF37;
-  --coral: #E07856;
-  --ivory: #FBF4E6;
-  --ivory-warm: #f6ecd4;
-  --charcoal: #2B211C;
+  --background: #F4EDE1;
+  --foreground: #2A231C;
+  --ink: #17130F;
+  --cream: #F4EDE1;
+  --cream-text: #2A231C;
+  --ink-text: #F4EDE1;
+  --terracotta: #C25E3A;
+  --amber: #DDA24A;
+  --sage: #8A9A7B;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: #0E5A43;
-  --primary-foreground: #FBF4E6;
+  --primary: #C25E3A;
+  --primary-foreground: #F4EDE1;
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
   --muted: oklch(0.968 0.007 247.896);
   --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: #C9A24B;
-  --accent-foreground: #2B211C;
+  --accent: #DDA24A;
+  --accent-foreground: #17130F;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: rgba(201, 162, 75, 0.35);
+  --border: rgba(42, 35, 28, 0.12);
   --input: oklch(0.929 0.013 255.508);
-  --ring: #C9A24B;
+  --ring: #C25E3A;
   --font-serif: 'Playfair Display', ui-serif, Georgia, serif;
-  --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-telugu: 'Noto Serif Telugu', 'Noto Sans Telugu', serif;
-  --gradient-hero: radial-gradient(ellipse at top, #f8e6b8 0%, #FBF4E6 55%, #f0dfa8 100%);
-  --gradient-emerald: linear-gradient(135deg, #0E5A43 0%, #0A3D2E 100%);
-  --shadow-soft: 0 10px 40px -12px rgba(14, 90, 67, 0.22);
-  --shadow-gold: 0 8px 30px -10px rgba(201, 162, 75, 0.45);
+  --gradient-ink: radial-gradient(ellipse at top right, rgba(194,94,58,0.18) 0%, rgba(23,19,15,0) 55%), #17130F;
+  --shadow-soft: 0 20px 60px -20px rgba(23, 19, 15, 0.35);
+  --grain-url: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.42  0 0 0 0 0.32  0 0 0 0 0.18  0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -156,38 +154,39 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    background-image:
-      radial-gradient(circle at 20% 10%, rgba(201, 162, 75, 0.08) 0, transparent 40%),
-      radial-gradient(circle at 80% 90%, rgba(14, 90, 67, 0.06) 0, transparent 45%),
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.42  0 0 0 0 0.32  0 0 0 0 0.18  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3, h4, h5 {
     font-family: var(--font-serif);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    font-weight: 500;
   }
 
   .font-telugu { font-family: var(--font-telugu); }
   .font-serif-display { font-family: var(--font-serif); }
+  .font-sans-ui { font-family: var(--font-sans); }
 
   ::selection {
-    background: #C9A24B;
-    color: #2B211C;
+    background: #C25E3A;
+    color: #F4EDE1;
   }
 }
 
-@utility gold-divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  color: #C9A24B;
+@utility hairline {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.25;
+}
 
-  &::before, &::after {
-    content: "";
-    flex: 1;
-    max-width: 6rem;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #C9A24B, transparent);
-  }
+@utility grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--grain-url);
+  opacity: 0.35;
+  mix-blend-mode: overlay;
 }

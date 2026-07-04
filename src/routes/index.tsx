@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Section from "@/components/Section";
 import Footer from "@/components/Footer";
+import ScrollProgress from "@/components/ScrollProgress";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -11,6 +12,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="relative w-full overflow-x-hidden">
+      <ScrollProgress />
       <Navbar />
       <main>
         <Hero />
@@ -19,35 +21,35 @@ function Index() {
           eyebrow="Chapter One"
           titleEn="Their Work"
           titleTe="వారి పని"
-          tone="warm"
+          tone="cream"
         />
         <Section
           id="bond"
           eyebrow="Chapter Two"
           titleEn="Their Bond"
           titleTe="వారి అనుబంధం"
-          tone="emerald"
+          tone="ink"
         />
         <Section
           id="journey"
           eyebrow="Chapter Three"
           titleEn="Journey"
           titleTe="ప్రయాణం"
-          tone="warm"
+          tone="cream"
         />
         <Section
           id="family"
           eyebrow="Chapter Four"
           titleEn="Family"
           titleTe="కుటుంబం"
-          tone="emerald"
+          tone="ink"
         />
         <Section
           id="gallery"
           eyebrow="Chapter Five"
           titleEn="Gallery"
           titleTe="గ్యాలరీ"
-          tone="warm"
+          tone="cream"
         />
         <Footer />
       </main>
