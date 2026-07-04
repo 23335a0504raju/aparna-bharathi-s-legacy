@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import Section from "@/components/Section";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
+import TheirWork from "@/components/TheirWork";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -16,13 +17,7 @@ function Index() {
       <Navbar />
       <main>
         <Hero />
-        <Section
-          id="work"
-          eyebrow="Chapter One"
-          titleEn="Their Work"
-          titleTe="వారి పని"
-          tone="cream"
-        />
+        <TheirWork />
         <Section
           id="bond"
           eyebrow="Chapter Two"
