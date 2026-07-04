@@ -77,7 +77,7 @@ export default function JourneyTeaser() {
 
         <Link
           to="/journey"
-          className="group mt-12 inline-flex items-center gap-3 rounded-full px-7 py-4 text-sm font-semibold tracking-tight transition-all hover:scale-[1.02] hover:shadow-[0_20px_50px_-15px_rgba(194,94,58,0.55)]"
+          className="group mt-12 inline-flex max-w-full flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl px-5 py-3.5 text-sm font-semibold tracking-tight transition-all hover:scale-[1.02] hover:shadow-[0_20px_50px_-15px_rgba(194,94,58,0.55)] sm:rounded-full sm:px-7 sm:py-4"
           style={{
             background: TERRA,
             color: "#FBF4E6",
@@ -86,14 +86,14 @@ export default function JourneyTeaser() {
         >
           <span>Enter Their Journey</span>
           <span
-            className="font-telugu text-[13px] opacity-80"
+            className="font-telugu text-[12px] opacity-80 sm:text-[13px]"
             style={{ color: AMBER }}
           >
             · ప్రయాణం చూడండి
           </span>
           <ArrowRight
             size={16}
-            className="transition-transform duration-300 group-hover:translate-x-1"
+            className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
           />
         </Link>
       </motion.div>
