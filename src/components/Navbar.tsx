@@ -11,6 +11,10 @@ const links = [
   { id: "gallery", label: "Gallery" },
 ];
 
+const INK = "#17130F";
+const CREAM = "#F4EDE1";
+const TERRA = "#C25E3A";
+
 function smoothScroll(id: string) {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -41,9 +45,7 @@ export default function Navbar() {
       audio.pause();
       setPlaying(false);
     } else {
-      audio.play().catch(() => {
-        // Audio file not present yet — keep toggle state visual only
-      });
+      audio.play().catch(() => {});
       setPlaying(true);
     }
   };
@@ -53,34 +55,33 @@ export default function Navbar() {
     smoothScroll(id);
   };
 
+  // Text stays cream over the ink hero, and stays cream on the translucent ink bar after scroll.
+  const textColor = CREAM;
+
   return (
     <motion.header
-      initial={{ y: -30, opacity: 0 }}
+      initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "backdrop-blur-md shadow-[0_6px_24px_-12px_rgba(0,0,0,0.4)]"
-          : ""
+        scrolled ? "backdrop-blur-xl" : ""
       }`}
       style={{
-        background: scrolled
-          ? "linear-gradient(135deg, #0E5A43 0%, #0A3D2E 100%)"
-          : "transparent",
-        borderBottom: scrolled ? "1px solid #C9A24B" : "1px solid transparent",
+        background: scrolled ? "rgba(23,19,15,0.72)" : "transparent",
+        borderBottom: scrolled
+          ? "1px solid rgba(244,237,225,0.08)"
+          : "1px solid transparent",
       }}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-10">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-10 md:py-5">
         <button
           onClick={() => handleNav("home")}
-          className="group flex items-center gap-2 font-serif-display text-lg md:text-xl"
-          style={{ color: scrolled ? "#FBF4E6" : "#0E5A43" }}
+          className="font-sans-ui flex items-center gap-2 text-sm font-medium tracking-tight md:text-[15px]"
+          style={{ color: textColor }}
         >
-          <span className="italic tracking-wide">Apparao</span>
-          <span style={{ color: "#E07856" }} className="text-base">
-            ❤
-          </span>
-          <span className="italic tracking-wide">Bharathi</span>
+          <span>Apparao</span>
+          <span style={{ color: TERRA }}>❤</span>
+          <span>Bharathi</span>
         </button>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -88,16 +89,15 @@ export default function Navbar() {
             <button
               key={l.id}
               onClick={() => handleNav(l.id)}
-              className="group relative rounded-full px-3 py-2 text-sm font-medium transition-colors hover:opacity-100"
-              style={{
-                color: scrolled ? "#FBF4E6" : "#2B211C",
-                opacity: scrolled ? 0.9 : 0.85,
-              }}
+              className="group relative px-3 py-2 text-[13px] font-medium tracking-tight transition-opacity"
+              style={{ color: textColor, opacity: 0.75 }}
             >
-              {l.label}
+              <span className="transition-opacity group-hover:opacity-100">
+                {l.label}
+              </span>
               <span
-                className="pointer-events-none absolute inset-x-3 -bottom-0.5 h-px origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
-                style={{ background: "#D4AF37" }}
+                className="pointer-events-none absolute inset-x-3 -bottom-0.5 h-px origin-center scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
+                style={{ background: TERRA }}
               />
             </button>
           ))}
@@ -107,26 +107,26 @@ export default function Navbar() {
           <button
             onClick={toggleMusic}
             aria-label={playing ? "Pause music" : "Play music"}
-            className="grid h-10 w-10 place-items-center rounded-full border transition-all hover:scale-105"
+            className="grid h-9 w-9 place-items-center rounded-full border transition-all hover:scale-105"
             style={{
-              borderColor: "#C9A24B",
-              background: scrolled ? "rgba(251,244,230,0.08)" : "rgba(201,162,75,0.12)",
-              color: scrolled ? "#FBF4E6" : "#0E5A43",
+              borderColor: "rgba(244,237,225,0.2)",
+              color: textColor,
+              background: "rgba(244,237,225,0.05)",
             }}
           >
-            {playing ? <Pause size={16} /> : <Play size={16} />}
+            {playing ? <Pause size={14} /> : <Play size={14} />}
           </button>
 
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
-            className="grid h-10 w-10 place-items-center rounded-full border md:hidden"
+            className="grid h-9 w-9 place-items-center rounded-full border md:hidden"
             style={{
-              borderColor: "#C9A24B",
-              color: scrolled ? "#FBF4E6" : "#0E5A43",
+              borderColor: "rgba(244,237,225,0.2)",
+              color: textColor,
             }}
           >
-            {open ? <X size={18} /> : <Menu size={18} />}
+            {open ? <X size={16} /> : <Menu size={16} />}
           </button>
         </div>
       </div>
@@ -138,19 +138,22 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="overflow-hidden md:hidden"
+            className="overflow-hidden backdrop-blur-xl md:hidden"
             style={{
-              background: "linear-gradient(135deg, #0E5A43 0%, #0A3D2E 100%)",
-              borderTop: "1px solid #C9A24B",
+              background: "rgba(23,19,15,0.92)",
+              borderTop: "1px solid rgba(244,237,225,0.08)",
             }}
           >
-            <div className="flex flex-col px-6 py-4">
+            <div className="flex flex-col px-6 py-2">
               {links.map((l) => (
                 <button
                   key={l.id}
                   onClick={() => handleNav(l.id)}
-                  className="border-b border-white/10 py-3 text-left text-sm font-medium tracking-wide"
-                  style={{ color: "#FBF4E6" }}
+                  className="border-b py-3 text-left text-sm font-medium tracking-tight"
+                  style={{
+                    color: CREAM,
+                    borderColor: "rgba(244,237,225,0.08)",
+                  }}
                 >
                   {l.label}
                 </button>
