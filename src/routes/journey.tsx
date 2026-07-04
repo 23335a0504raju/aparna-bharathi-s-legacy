@@ -7,7 +7,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, Cake, Heart, Play, Pause, ChevronDown } from "lucide-react";
+import { ArrowLeft, Cake, Heart, ChevronDown } from "lucide-react";
 import SmartImage from "@/components/SmartImage";
 import { IMAGES } from "@/lib/images";
 
@@ -57,8 +57,6 @@ function PageProgress() {
 /* ---------------- Sticky slim top bar ---------------- */
 function TopBar() {
   const [scrolled, setScrolled] = useState(false);
-  const [playing, setPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -66,18 +64,6 @@ function TopBar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const toggle = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (playing) {
-      audio.pause();
-      setPlaying(false);
-    } else {
-      audio.play().catch(() => {});
-      setPlaying(true);
-    }
-  };
 
   return (
     <motion.header
@@ -117,25 +103,8 @@ function TopBar() {
           <span>Bharathi</span>
         </div>
 
-        <button
-          onClick={toggle}
-          aria-label={playing ? "Pause music" : "Play music"}
-          className="grid h-8 w-8 place-items-center rounded-full border transition-all hover:scale-105"
-          style={{
-            borderColor: "rgba(244,237,225,0.2)",
-            color: CREAM,
-            background: "rgba(244,237,225,0.05)",
-          }}
-        >
-          {playing ? <Pause size={12} /> : <Play size={12} />}
-        </button>
-        <audio
-          ref={audioRef}
-          src="/audio/background-music.mp3"
-          loop
-          preload="none"
-          aria-hidden
-        />
+        {/* right-side spacer keeps the wordmark centered */}
+        <span className="w-8" aria-hidden />
       </div>
     </motion.header>
   );
@@ -285,6 +254,7 @@ type Milestone = {
   bodyTe: string;
   photos: Photo[];
   feature?: boolean; // wedding / today
+  featureAspect?: string; // override the 21/9 feature crop (e.g. portrait photos)
   tone: "ink" | "cream";
 };
 
@@ -300,7 +270,20 @@ const MILESTONES: Milestone[] = [
       "రెండు కుటుంబాలు ఒకటయ్యాయి; ఇద్దరు అపరిచితులు ఒక జీవితకాల ప్రయాణాన్ని ప్రారంభించారు.",
     photos: [IMAGES.wedding],
     feature: true,
+    featureAspect: "3 / 4",
     tone: "cream",
+  },
+  {
+    year: "1999",
+    date: "From the family album",
+    titleEn: "Wedding Memories",
+    titleTe: "వివాహ జ్ఞాపకాలు",
+    bodyEn:
+      "Tucked away in an old photo album — the mangalsutra tied, the rituals shared with family, moments kept safe for over two decades.",
+    bodyTe:
+      "పాత ఫోటో ఆల్బమ్‌లో దాచిన క్షణాలు — మంగళసూత్రధారణ, కుటుంబంతో పంచుకున్న ఆచారాలు, రెండు దశాబ్దాలకు పైగా భద్రంగా ఉన్న జ్ఞాపకాలు.",
+    photos: [IMAGES.weddingMemory1, IMAGES.weddingMemory2],
+    tone: "ink",
   },
   {
     year: "2000",
@@ -308,9 +291,9 @@ const MILESTONES: Milestone[] = [
     titleEn: "Sai Arrives",
     titleTe: "సాయి జననం",
     bodyEn:
-      "Their first blessing — a daughter who made them parents, and made a house into a home.",
+      "Their first blessing — a daughter who made them parents, and made a house into a home. Here she is today, framed by a heart.",
     bodyTe:
-      "వారి మొదటి ఆశీర్వాదం — వారిని తల్లిదండ్రులుగా మార్చిన కూతురు.",
+      "వారి మొదటి ఆశీర్వాదం — వారిని తల్లిదండ్రులుగా మార్చిన కూతురు. నేడు ఆమె, ఒక హృదయం మధ్యలో.",
     photos: [IMAGES.saiBaby],
     tone: "ink",
   },
@@ -320,8 +303,9 @@ const MILESTONES: Milestone[] = [
     titleEn: "Raju Arrives",
     titleTe: "రాజు జననం",
     bodyEn:
-      "A son; their family felt complete — four hearts under one roof, one love multiplied.",
-    bodyTe: "ఒక కుమారుడు; వారి కుటుంబం పూర్తయినట్లు అనిపించింది.",
+      "A son; their family felt complete — four hearts under one roof, one love multiplied. Now grown, carrying their smile forward.",
+    bodyTe:
+      "ఒక కుమారుడు; వారి కుటుంబం పూర్తయినట్లు అనిపించింది. ఇప్పుడు పెరిగి, వారి చిరునవ్వును ముందుకు తీసుకెళ్తున్నాడు.",
     photos: [IMAGES.rajuBaby],
     tone: "cream",
   },
@@ -331,9 +315,9 @@ const MILESTONES: Milestone[] = [
     titleEn: "The Growing Years",
     titleTe: "పెరిగిన సంవత్సరాలు",
     bodyEn:
-      "School runs, festivals, small joys and quiet sacrifices — the ordinary days that quietly shaped us.",
+      "Festivals in half-sarees, everyday selfies, small joys and quiet sacrifices — the ordinary days that quietly shaped us.",
     bodyTe:
-      "పాఠశాలలు, పండుగలు, చిన్న సంతోషాలు, నిశ్శబ్ద త్యాగాలు — మమ్మల్ని రూపొందించిన సాధారణ రోజులు.",
+      "పండుగల అలంకారాలు, రోజువారీ క్షణాలు, చిన్న సంతోషాలు, నిశ్శబ్ద త్యాగాలు — మమ్మల్ని రూపొందించిన సాధారణ రోజులు.",
     photos: [IMAGES.childhood1, IMAGES.childhood2],
     tone: "ink",
   },
@@ -343,9 +327,9 @@ const MILESTONES: Milestone[] = [
     titleEn: "Milestones & Smiles",
     titleTe: "మధురమైన క్షణాలు",
     bodyEn:
-      "Celebrations and everyday love — the small triumphs and steady presence that raised us.",
+      "Twenty-five years celebrated with cake and balloons, forest outings together — the small triumphs and steady presence that raised us.",
     bodyTe:
-      "వేడుకలు మరియు రోజువారీ ప్రేమ — మమ్మల్ని పెంచిన స్థిరమైన ఉనికి.",
+      "కేక్, బెలూన్లతో జరుపుకున్న పాతికేళ్ల వేడుక, కలిసి చేసిన విహారాలు — మమ్మల్ని పెంచిన స్థిరమైన ఉనికి.",
     photos: [IMAGES.growing1, IMAGES.growing2],
     tone: "cream",
   },
@@ -405,14 +389,9 @@ function RevealPhoto({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 1.1, filter: "blur(14px)", clipPath: "inset(0 0 100% 0)" }}
-      whileInView={{
-        opacity: 1,
-        scale: 1,
-        filter: "blur(0px)",
-        clipPath: "inset(0 0 0% 0)",
-      }}
-      viewport={{ once: true, amount: 0.3 }}
+      initial={{ opacity: 0, y: 60, scale: 1.06 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       className={`relative overflow-hidden rounded-2xl ${className}`}
       style={{
@@ -421,7 +400,8 @@ function RevealPhoto({
         outline: "1px solid rgba(244,237,225,0.08)",
       }}
     >
-      <motion.div className="h-full w-full" style={{ y: parallaxY }}>
+      {/* slight zoom gives the parallax shift room without exposing edges */}
+      <motion.div className="h-full w-full scale-105" style={{ y: parallaxY }}>
         <SmartImage
           src={photo.src}
           alt={photo.alt}
@@ -449,7 +429,7 @@ function MilestoneNode({
     target: nodeRef,
     offset: ["start end", "end start"],
   });
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [-40, 40]);
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [-20, 20]);
 
   const bg = dark ? INK : CREAM;
   const textColor = dark ? CREAM : "#2A231C";
@@ -485,9 +465,13 @@ function MilestoneNode({
           <div className="relative pl-12 md:pl-0">
             <RevealPhoto
               photo={milestone.photos[0]}
-              aspect="21 / 9"
+              aspect={milestone.featureAspect ?? "21 / 9"}
               parallaxY={parallaxY}
-              className="w-full"
+              className={
+                milestone.featureAspect
+                  ? "mx-auto w-full max-w-md md:max-w-lg"
+                  : "w-full"
+              }
             />
 
             <motion.div

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <defs>
+    <radialGradient id="heart" cx="35%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#ffb090" />
+      <stop offset="65%" stop-color="#C25E3A" />
+      <stop offset="100%" stop-color="#7a2f18" />
+    </radialGradient>
+  </defs>
+  <path fill="url(#heart)" d="M12 21s-7-4.5-9.5-9C.7 8.5 3 4 7 4c2 0 3.5 1 5 3 1.5-2 3-3 5-3 4 0 6.3 4.5 4.5 8-2.5 4.5-9.5 9-9.5 9z" />
+</svg>

@@ -7,6 +7,8 @@ const AMBER = "#DDA24A";
 const TEXT = "#2A231C";
 const MUTED = "rgba(42,35,28,0.68)";
 
+const MotionLink = motion.create(Link);
+
 export default function JourneyTeaser() {
   return (
     <section
@@ -75,27 +77,44 @@ export default function JourneyTeaser() {
           వారి వివాహం నుండి నేటి వరకు — ప్రతి ముఖ్యమైన క్షణాన్ని చూడండి.
         </p>
 
-        <Link
-          to="/journey"
-          className="group mt-12 inline-flex max-w-full flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl px-5 py-3.5 text-sm font-semibold tracking-tight transition-all hover:scale-[1.02] hover:shadow-[0_20px_50px_-15px_rgba(194,94,58,0.55)] sm:rounded-full sm:px-7 sm:py-4"
-          style={{
-            background: TERRA,
-            color: "#FBF4E6",
-            boxShadow: "0 15px 40px -18px rgba(194,94,58,0.5)",
-          }}
-        >
-          <span>Enter Their Journey</span>
-          <span
-            className="font-telugu text-[12px] opacity-80 sm:text-[13px]"
-            style={{ color: AMBER }}
-          >
-            · ప్రయాణం చూడండి
-          </span>
-          <ArrowRight
-            size={16}
-            className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+        <div className="relative mt-12 inline-block max-w-full">
+          {/* Pulsing halo — signals the button is alive and clickable */}
+          <motion.span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-2xl sm:rounded-full"
+            style={{ background: TERRA }}
+            animate={{ opacity: [0.45, 0, 0.45], scale: [1, 1.18, 1] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
           />
-        </Link>
+          <MotionLink
+            to="/journey"
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.98 }}
+            className="group relative inline-flex max-w-full flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl px-5 py-3.5 text-sm font-semibold tracking-tight transition-shadow duration-300 hover:shadow-[0_20px_50px_-15px_rgba(194,94,58,0.55)] sm:rounded-full sm:px-7 sm:py-4"
+            style={{
+              background: TERRA,
+              color: "#FBF4E6",
+              boxShadow: "0 15px 40px -18px rgba(194,94,58,0.5)",
+            }}
+          >
+            <span>Enter Their Journey</span>
+            <span
+              className="font-telugu text-[12px] opacity-80 sm:text-[13px]"
+              style={{ color: AMBER }}
+            >
+              · ప్రయాణం చూడండి
+            </span>
+            <motion.span
+              className="inline-flex shrink-0"
+              animate={{ x: [0, 6, 0] }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <ArrowRight size={16} />
+            </motion.span>
+          </MotionLink>
+        </div>
       </motion.div>
     </section>
   );
