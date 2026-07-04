@@ -65,19 +65,19 @@ export default function Navbar() {
       }`}
       style={{
         background: scrolled
-          ? "linear-gradient(135deg, #6E1423 0%, #4a0d17 100%)"
+          ? "linear-gradient(135deg, #0E5A43 0%, #0A3D2E 100%)"
           : "transparent",
-        borderBottom: scrolled ? "1px solid #C79A3B" : "1px solid transparent",
+        borderBottom: scrolled ? "1px solid #C9A24B" : "1px solid transparent",
       }}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-10">
         <button
           onClick={() => handleNav("home")}
           className="group flex items-center gap-2 font-serif-display text-lg md:text-xl"
-          style={{ color: scrolled ? "#FBF4E6" : "#6E1423" }}
+          style={{ color: scrolled ? "#FBF4E6" : "#0E5A43" }}
         >
           <span className="italic tracking-wide">Apparao</span>
-          <span style={{ color: "#D4AF37" }} className="text-base">
+          <span style={{ color: "#E07856" }} className="text-base">
             ❤
           </span>
           <span className="italic tracking-wide">Bharathi</span>
@@ -88,7 +88,7 @@ export default function Navbar() {
             <button
               key={l.id}
               onClick={() => handleNav(l.id)}
-              className="relative rounded-full px-3 py-2 text-sm font-medium transition-colors hover:opacity-100"
+              className="group relative rounded-full px-3 py-2 text-sm font-medium transition-colors hover:opacity-100"
               style={{
                 color: scrolled ? "#FBF4E6" : "#2B211C",
                 opacity: scrolled ? 0.9 : 0.85,
@@ -96,7 +96,7 @@ export default function Navbar() {
             >
               {l.label}
               <span
-                className="pointer-events-none absolute inset-x-3 -bottom-0.5 h-px origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 hover:scale-x-100"
+                className="pointer-events-none absolute inset-x-3 -bottom-0.5 h-px origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
                 style={{ background: "#D4AF37" }}
               />
             </button>
@@ -109,9 +109,9 @@ export default function Navbar() {
             aria-label={playing ? "Pause music" : "Play music"}
             className="grid h-10 w-10 place-items-center rounded-full border transition-all hover:scale-105"
             style={{
-              borderColor: "#C79A3B",
-              background: scrolled ? "rgba(251,244,230,0.08)" : "rgba(199,154,59,0.12)",
-              color: scrolled ? "#FBF4E6" : "#6E1423",
+              borderColor: "#C9A24B",
+              background: scrolled ? "rgba(251,244,230,0.08)" : "rgba(201,162,75,0.12)",
+              color: scrolled ? "#FBF4E6" : "#0E5A43",
             }}
           >
             {playing ? <Pause size={16} /> : <Play size={16} />}
@@ -122,8 +122,8 @@ export default function Navbar() {
             aria-label="Toggle menu"
             className="grid h-10 w-10 place-items-center rounded-full border md:hidden"
             style={{
-              borderColor: "#C79A3B",
-              color: scrolled ? "#FBF4E6" : "#6E1423",
+              borderColor: "#C9A24B",
+              color: scrolled ? "#FBF4E6" : "#0E5A43",
             }}
           >
             {open ? <X size={18} /> : <Menu size={18} />}
@@ -140,8 +140,8 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="overflow-hidden md:hidden"
             style={{
-              background: "linear-gradient(135deg, #6E1423 0%, #4a0d17 100%)",
-              borderTop: "1px solid #C79A3B",
+              background: "linear-gradient(135deg, #0E5A43 0%, #0A3D2E 100%)",
+              borderTop: "1px solid #C9A24B",
             }}
           >
             <div className="flex flex-col px-6 py-4">
