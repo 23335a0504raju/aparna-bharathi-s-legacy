@@ -1,6 +1,12 @@
 import { motion } from "framer-motion";
+import { ArrowUp } from "lucide-react";
 
 export default function Footer() {
+  const toTop = () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
   return (
     <footer
       id="footer"
@@ -27,24 +33,41 @@ export default function Footer() {
           className="font-sans-ui text-[0.65rem] font-semibold uppercase tracking-[0.32em]"
           style={{ color: "#C25E3A" }}
         >
-          In loving memory
+          With gratitude
         </span>
         <h3 className="mt-6 font-serif-display text-4xl leading-[1.05] md:text-6xl">
-          Your love lives on in every heartbeat of this family.
+          Made with <span style={{ color: "#C25E3A" }}>❤</span> for Amma &amp; Nanna.
         </h3>
         <p
           className="font-telugu mt-4 text-xl md:text-2xl"
           style={{ color: "#DDA24A" }}
         >
-          మీ ప్రేమ ఎప్పటికీ మా హృదయాలలో
+          అమ్మ &amp; నాన్న కోసం ❤ తో
         </p>
         <div
           className="mt-14 h-px w-full"
           style={{ background: "rgba(244,237,225,0.15)" }}
         />
-        <div className="mt-6 flex w-full flex-col items-start justify-between gap-2 font-sans-ui text-xs uppercase tracking-[0.28em] opacity-60 md:flex-row md:items-center">
-          <span>Apparao ❤ Bharathi</span>
-          <span>With love, from your children</span>
+        <div className="mt-6 grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
+          <div className="min-w-0 font-sans-ui text-[11px] uppercase tracking-[0.28em] opacity-60">
+            <span className="truncate">Apparao ❤ Bharathi · Since 1999</span>
+          </div>
+          <button
+            onClick={toTop}
+            aria-label="Back to top"
+            className="group inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] transition-all hover:scale-[1.03]"
+            style={{
+              borderColor: "rgba(244,237,225,0.2)",
+              color: "#F4EDE1",
+              background: "rgba(244,237,225,0.05)",
+            }}
+          >
+            <ArrowUp
+              size={13}
+              className="transition-transform duration-300 group-hover:-translate-y-0.5"
+            />
+            <span>Top</span>
+          </button>
         </div>
       </motion.div>
     </footer>
