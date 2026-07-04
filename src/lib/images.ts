@@ -35,6 +35,8 @@ export const IMAGES = {
   childhood1: { src: "/images/childhood-1.jpg", alt: "Childhood memories" },
   childhood2: { src: "/images/childhood-2.jpg", alt: "Childhood memories" },
   familyRecent: { src: "/images/family-recent.jpg", alt: "The family today" },
+  growing1: { src: "/images/growing-1.jpg", alt: "Growing up — a family celebration" },
+  growing2: { src: "/images/growing-2.jpg", alt: "Growing up — an everyday moment" },
   couple: {
     src: "/images/couple.jpg",
     alt: "Apparao and Bharathi together",
