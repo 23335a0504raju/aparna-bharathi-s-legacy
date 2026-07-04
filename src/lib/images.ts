@@ -51,3 +51,19 @@ export const IMAGES = {
 } as const;
 
 export type ImageKey = keyof typeof IMAGES;
+
+// Family section: 1 featured + 5 grid
+export const FAMILY_PHOTOS = [
+  { src: "/images/family-1.jpg", alt: "The whole family together" },
+  { src: "/images/family-2.jpg", alt: "Family portrait" },
+  { src: "/images/family-3.jpg", alt: "Family gathering" },
+  { src: "/images/family-4.jpg", alt: "Family celebration" },
+  { src: "/images/family-5.jpg", alt: "Family at home" },
+  { src: "/images/family-6.jpg", alt: "Family moment" },
+];
+
+// Gallery masonry: 15 images
+export const GALLERY_PHOTOS = Array.from({ length: 15 }, (_, i) => ({
+  src: `/images/gallery-${i + 1}.jpg`,
+  alt: `Memory ${i + 1}`,
+}));
