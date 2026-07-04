@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import TheirWork from "@/components/TheirWork";
 import TheirBond from "@/components/TheirBond";
-import Journey from "@/components/Journey";
+import JourneyTeaser from "@/components/JourneyTeaser";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -21,7 +21,7 @@ function Index() {
         <Hero />
         <TheirWork />
         <TheirBond />
-        <Journey />
+        <JourneyTeaser />
         <Section
           id="family"
           eyebrow="Chapter Four"
