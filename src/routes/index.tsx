@@ -1,12 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Section from "@/components/Section";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import TheirWork from "@/components/TheirWork";
 import TheirBond from "@/components/TheirBond";
 import JourneyTeaser from "@/components/JourneyTeaser";
+import Family from "@/components/Family";
+import Gallery from "@/components/Gallery";
+import LoadingIntro from "@/components/LoadingIntro";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -15,6 +17,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="relative w-full overflow-x-hidden">
+      <LoadingIntro />
       <ScrollProgress />
       <Navbar />
       <main>
@@ -22,20 +25,8 @@ function Index() {
         <TheirWork />
         <TheirBond />
         <JourneyTeaser />
-        <Section
-          id="family"
-          eyebrow="Chapter Four"
-          titleEn="Family"
-          titleTe="కుటుంబం"
-          tone="ink"
-        />
-        <Section
-          id="gallery"
-          eyebrow="Chapter Five"
-          titleEn="Gallery"
-          titleTe="గ్యాలరీ"
-          tone="cream"
-        />
+        <Family />
+        <Gallery />
         <Footer />
       </main>
     </div>

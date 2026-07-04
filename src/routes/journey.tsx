@@ -58,13 +58,7 @@ function PageProgress() {
 function TopBar() {
   const [scrolled, setScrolled] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [audio] = useState(() => {
-    if (typeof Audio === "undefined") return null;
-    const a = new Audio("/audio/background.mp3");
-    a.loop = true;
-    a.volume = 0.4;
-    return a;
-  });
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -74,6 +68,7 @@ function TopBar() {
   }, []);
 
   const toggle = () => {
+    const audio = audioRef.current;
     if (!audio) return;
     if (playing) {
       audio.pause();
@@ -134,6 +129,13 @@ function TopBar() {
         >
           {playing ? <Pause size={12} /> : <Play size={12} />}
         </button>
+        <audio
+          ref={audioRef}
+          src="/audio/background-music.mp3"
+          loop
+          preload="none"
+          aria-hidden
+        />
       </div>
     </motion.header>
   );
