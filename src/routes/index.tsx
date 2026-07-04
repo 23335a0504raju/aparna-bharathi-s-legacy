@@ -5,6 +5,8 @@ import Section from "@/components/Section";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import TheirWork from "@/components/TheirWork";
+import TheirBond from "@/components/TheirBond";
+import Journey from "@/components/Journey";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -18,20 +20,8 @@ function Index() {
       <main>
         <Hero />
         <TheirWork />
-        <Section
-          id="bond"
-          eyebrow="Chapter Two"
-          titleEn="Their Bond"
-          titleTe="వారి అనుబంధం"
-          tone="ink"
-        />
-        <Section
-          id="journey"
-          eyebrow="Chapter Three"
-          titleEn="Journey"
-          titleTe="ప్రయాణం"
-          tone="cream"
-        />
+        <TheirBond />
+        <Journey />
         <Section
           id="family"
           eyebrow="Chapter Four"
