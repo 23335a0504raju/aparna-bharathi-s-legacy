@@ -476,7 +476,7 @@ function MilestoneNode({
         }}
       />
 
-      <div className="relative mx-auto min-h-[85svh] w-full max-w-7xl px-6 py-24 md:px-10 md:py-32">
+      <div className="relative mx-auto w-full max-w-7xl px-6 py-20 md:min-h-[85svh] md:px-10 md:py-32">
         {/* Timeline dot */}
         <TimelineDot />
 
