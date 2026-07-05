@@ -125,3 +125,45 @@ export const GALLERY_PHOTOS = [
   { src: "/images/gallery-14.jpg", alt: "Sai, framed by a heart of roses" },
   { src: "/images/gallery-15.jpg", alt: "Sai with family" },
 ];
+
+/* ---------------- Preload lists for the intro loader ----------------
+ * "Critical" images block the intro loader (above/near the fold).
+ * "Warm" images are fetched quietly in the background after the loader exits,
+ * so they're already cached by the time the user scrolls / navigates.
+ */
+export const HOME_CRITICAL_IMAGES: string[] = [
+  IMAGES.dadPortrait,
+  IMAGES.momPortrait,
+  IMAGES.momWork1,
+  IMAGES.momWork2,
+  IMAGES.dadWork1,
+  IMAGES.dadWork2,
+  IMAGES.couple1,
+  IMAGES.couple2,
+  IMAGES.couple3,
+  IMAGES.couple4,
+].map((i) => i.src);
+
+export const JOURNEY_CRITICAL_IMAGES: string[] = [
+  IMAGES.wedding,
+  IMAGES.weddingMemory1,
+  IMAGES.weddingMemory2,
+].map((i) => i.src);
+
+export const JOURNEY_WARM_IMAGES: string[] = [
+  IMAGES.saiBaby,
+  IMAGES.rajuBaby,
+  IMAGES.childhood1,
+  IMAGES.childhood2,
+  IMAGES.growing1,
+  IMAGES.growing2,
+  IMAGES.familyRecent,
+].map((i) => i.src);
+
+export const HOME_WARM_IMAGES: string[] = [
+  ...FAMILY_PHOTOS.map((p) => p.src),
+  ...GALLERY_PHOTOS.map((p) => p.src),
+  // warm the journey page too so navigating there feels instant
+  ...JOURNEY_CRITICAL_IMAGES,
+  ...JOURNEY_WARM_IMAGES,
+];

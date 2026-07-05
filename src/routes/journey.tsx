@@ -9,7 +9,12 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Cake, Heart, ChevronDown } from "lucide-react";
 import SmartImage from "@/components/SmartImage";
-import { IMAGES } from "@/lib/images";
+import LoadingIntro from "@/components/LoadingIntro";
+import {
+  IMAGES,
+  JOURNEY_CRITICAL_IMAGES,
+  JOURNEY_WARM_IMAGES,
+} from "@/lib/images";
 
 const INK = "#17130F";
 const CREAM = "#F4EDE1";
@@ -757,7 +762,7 @@ function SpecialDates() {
                     {d.name}
                   </p>
                   <p
-                    className="font-sans-ui mt-1 truncate text-[11px] uppercase tracking-[0.28em]"
+                    className="font-sans-ui mt-1 text-[11px] uppercase tracking-[0.12em]"
                     style={{ color: "rgba(42,35,28,0.68)" }}
                   >
                     {d.date}
@@ -855,6 +860,12 @@ function JourneyPage() {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="relative w-full overflow-x-hidden"
     >
+      {/* Shows only on a direct visit to /journey — skipped (but still
+          warms images) when navigating from the home page. */}
+      <LoadingIntro
+        images={JOURNEY_CRITICAL_IMAGES}
+        warmAfter={JOURNEY_WARM_IMAGES}
+      />
       <PageProgress />
       <TopBar />
       <main>

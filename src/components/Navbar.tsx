@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Play, Pause } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 
 type NavLink =
@@ -28,10 +28,8 @@ function smoothScroll(id: string) {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [playing, setPlaying] = useState(false);
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -39,18 +37,6 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const toggleMusic = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (playing) {
-      audio.pause();
-      setPlaying(false);
-    } else {
-      audio.play().catch(() => {});
-      setPlaying(true);
-    }
-  };
 
   const handleScrollNav = (id: string) => {
     setOpen(false);
@@ -124,38 +110,6 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={toggleMusic}
-            aria-label={playing ? "Pause music" : "Play music"}
-            className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-full border transition-all hover:scale-105"
-            style={{
-              borderColor: "rgba(244,237,225,0.2)",
-              color: textColor,
-              background: "rgba(244,237,225,0.05)",
-            }}
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={playing ? "pause" : "play"}
-                initial={{ opacity: 0, scale: 0.6, rotate: -30 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                exit={{ opacity: 0, scale: 0.6, rotate: 30 }}
-                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-0 grid place-items-center"
-              >
-                {playing ? <Pause size={14} /> : <Play size={14} />}
-              </motion.span>
-            </AnimatePresence>
-          </button>
-
-          <audio
-            ref={audioRef}
-            src="/audio/background-music.mp3"
-            loop
-            preload="none"
-            aria-hidden
-          />
-
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"

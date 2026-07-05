@@ -122,6 +122,8 @@ export default function Gallery() {
                 src={p.src}
                 alt={p.alt}
                 loading="lazy"
+                skeletonTone="light"
+                loadingAspect="4 / 5"
                 className="block w-full transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
               />
             </motion.button>

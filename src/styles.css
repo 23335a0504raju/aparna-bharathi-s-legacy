@@ -236,6 +236,45 @@
   }
 }
 
+/* ---------- Image loading states (SmartImage) ---------- */
+@keyframes img-shimmer {
+  0% { background-position: 180% 0; }
+  100% { background-position: -80% 0; }
+}
+/* opacity only — animating transform here would pin it and break hover zooms */
+@keyframes img-settle {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.img-skeleton {
+  background-color: #2a231c;
+  background-image: linear-gradient(
+    100deg,
+    #2a231c 38%,
+    #3d3327 50%,
+    #2a231c 62%
+  );
+  background-size: 220% 100%;
+  animation: img-shimmer 1.5s ease-in-out infinite;
+}
+.img-skeleton-light {
+  background-color: #e6dcc9;
+  background-image: linear-gradient(
+    100deg,
+    #e6dcc9 38%,
+    #f1e9d9 50%,
+    #e6dcc9 62%
+  );
+}
+.img-loaded {
+  animation: img-settle 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .img-skeleton { animation: none; }
+  .img-loaded { animation: none; }
+}
+
 @utility hairline {
   display: block;
   width: 100%;

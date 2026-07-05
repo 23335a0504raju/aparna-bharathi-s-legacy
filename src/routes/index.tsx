@@ -9,6 +9,7 @@ import JourneyTeaser from "@/components/JourneyTeaser";
 import Family from "@/components/Family";
 import Gallery from "@/components/Gallery";
 import LoadingIntro from "@/components/LoadingIntro";
+import { HOME_CRITICAL_IMAGES, HOME_WARM_IMAGES } from "@/lib/images";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -17,7 +18,10 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="relative w-full overflow-x-hidden">
-      <LoadingIntro />
+      <LoadingIntro
+        images={HOME_CRITICAL_IMAGES}
+        warmAfter={HOME_WARM_IMAGES}
+      />
       <ScrollProgress />
       <Navbar />
       <main>

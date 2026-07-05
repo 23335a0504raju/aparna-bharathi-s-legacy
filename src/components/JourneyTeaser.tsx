@@ -78,26 +78,80 @@ export default function JourneyTeaser() {
         </p>
 
         <div className="relative mt-12 inline-block max-w-full">
-          {/* Pulsing halo — signals the button is alive and clickable */}
-          <motion.span
+          {/* Hand-drawn arrow pointing at the button: draws itself in,
+              then keeps nudging toward it. Hidden on very small screens. */}
+          <motion.div
             aria-hidden
-            className="pointer-events-none absolute inset-0 rounded-2xl sm:rounded-full"
-            style={{ background: TERRA }}
-            animate={{ opacity: [0.45, 0, 0.45], scale: [1, 1.18, 1] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-          />
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="pointer-events-none absolute left-full top-1/2 z-10 ml-1.5 hidden w-[150px] -translate-y-[78%] sm:block"
+          >
+            <p
+              className="font-serif-display mb-0.5 pl-11 text-[17px] italic leading-tight"
+              style={{ color: TERRA, transform: "rotate(-5deg)" }}
+            >
+              Click here
+              <span
+                className="font-telugu block not-italic text-[12px]"
+                style={{ color: "rgba(194,94,58,0.8)" }}
+              >
+                నొక్కండి
+              </span>
+            </p>
+            <motion.svg
+              viewBox="0 0 100 100"
+              className="block w-[84px]"
+              fill="none"
+              animate={{ x: [0, -7, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              {/* curved shaft — dives from the label down to the button edge */}
+              <motion.path
+                d="M74 4 C 96 30, 86 62, 20 72"
+                stroke={TERRA}
+                strokeWidth="3.2"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 0.9, delay: 0.5, ease: "easeOut" }}
+              />
+              {/* arrowhead */}
+              <motion.path
+                d="M38 58 L17 73 L36 86"
+                stroke={TERRA}
+                strokeWidth="3.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 0.3, delay: 1.3 }}
+              />
+            </motion.svg>
+          </motion.div>
           <MotionLink
             to="/journey"
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            // Soft heartbeat ring radiating from the button's own edge —
+            // stays perfectly aligned, unlike a separate halo element.
+            animate={{
+              boxShadow: [
+                "0 15px 40px -18px rgba(194,94,58,0.5), 0 0 0 0 rgba(194,94,58,0.35)",
+                "0 15px 40px -18px rgba(194,94,58,0.5), 0 0 0 14px rgba(194,94,58,0)",
+              ],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeOut",
+              repeatDelay: 0.6,
+            }}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.98 }}
-            className="group relative inline-flex max-w-full flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl px-5 py-3.5 text-sm font-semibold tracking-tight transition-shadow duration-300 hover:shadow-[0_20px_50px_-15px_rgba(194,94,58,0.55)] sm:rounded-full sm:px-7 sm:py-4"
-            style={{
-              background: TERRA,
-              color: "#FBF4E6",
-              boxShadow: "0 15px 40px -18px rgba(194,94,58,0.5)",
-            }}
+            className="group relative inline-flex max-w-full flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl px-5 py-3.5 text-sm font-semibold tracking-tight sm:rounded-full sm:px-7 sm:py-4"
+            style={{ background: TERRA, color: "#FBF4E6" }}
           >
             <span>Enter Their Journey</span>
             <span
@@ -106,13 +160,9 @@ export default function JourneyTeaser() {
             >
               · ప్రయాణం చూడండి
             </span>
-            <motion.span
-              className="inline-flex shrink-0"
-              animate={{ x: [0, 6, 0] }}
-              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-            >
+            <span className="inline-flex shrink-0 transition-transform duration-300 ease-out group-hover:translate-x-1.5">
               <ArrowRight size={16} />
-            </motion.span>
+            </span>
           </MotionLink>
         </div>
       </motion.div>

@@ -1,14 +1,21 @@
-import { useState, type ImgHTMLAttributes } from "react";
+import { useCallback, useState, type ImgHTMLAttributes } from "react";
 
 interface SmartImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
   className?: string;
   wrapperClassName?: string;
+  /** Aspect ratio to hold while loading, for images without a sized parent (e.g. masonry). */
+  loadingAspect?: string;
+  /** Skeleton shimmer tone — "dark" for ink sections, "light" for cream sections. */
+  skeletonTone?: "dark" | "light";
 }
 
+type Status = "loading" | "loaded" | "error";
+
 /**
- * Renders an <img>. If the file is missing/errors, shows a warm
+ * Renders an <img> with a shimmer skeleton while it loads and a soft
+ * fade-in once it settles. If the file is missing/errors, shows a warm
  * cream/ink placeholder with the filename so it can be dropped in later.
  */
 export default function SmartImage({
@@ -16,12 +23,23 @@ export default function SmartImage({
   alt,
   className = "",
   wrapperClassName = "",
+  loadingAspect,
+  skeletonTone = "dark",
+  style,
   ...rest
 }: SmartImageProps) {
-  const [errored, setErrored] = useState(false);
+  const [status, setStatus] = useState<Status>("loading");
   const filename = src.split("/").pop() ?? src;
 
-  if (errored) {
+  // Catch images that finished loading before hydration attached onLoad
+  // (cached files, SSR-rendered markup).
+  const imgRef = useCallback((el: HTMLImageElement | null) => {
+    if (el && el.complete && el.naturalWidth > 0) {
+      setStatus((s) => (s === "loading" ? "loaded" : s));
+    }
+  }, []);
+
+  if (status === "error") {
     return (
       <div
         className={`relative flex items-center justify-center overflow-hidden ${wrapperClassName} ${className}`}
@@ -48,13 +66,24 @@ export default function SmartImage({
     );
   }
 
+  const isLoading = status === "loading";
+  const stateClass = isLoading
+    ? `img-skeleton ${skeletonTone === "light" ? "img-skeleton-light" : ""}`
+    : "img-loaded";
+
   return (
     <img
+      ref={imgRef}
       src={src}
       alt={alt}
-      onError={() => setErrored(true)}
+      onLoad={() => setStatus("loaded")}
+      onError={() => setStatus("error")}
       loading="lazy"
-      className={`${wrapperClassName} ${className}`}
+      className={`${wrapperClassName} ${className} ${stateClass}`}
+      style={{
+        ...(isLoading && loadingAspect ? { aspectRatio: loadingAspect } : null),
+        ...style,
+      }}
       {...rest}
     />
   );
