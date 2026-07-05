@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { scrollToElement } from "./SmoothScroll";
 
 type NavLink =
   | { kind: "scroll"; id: string; label: string }
@@ -22,7 +23,7 @@ const TERRA = "#C25E3A";
 
 function smoothScroll(id: string) {
   const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (el) scrollToElement(el);
 }
 
 export default function Navbar() {
@@ -38,17 +39,30 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Scroll as soon as the target section exists and nothing is locking
+  // scroll (the intro loader sets body overflow:hidden while visible).
+  const scrollWhenReady = (id: string) => {
+    const t0 = Date.now();
+    const tick = () => {
+      const el = document.getElementById(id);
+      const locked = document.body.style.overflow === "hidden";
+      if (el && !locked) {
+        smoothScroll(id);
+        return;
+      }
+      if (Date.now() - t0 < 12000) requestAnimationFrame(tick);
+    };
+    tick();
+  };
+
   const handleScrollNav = (id: string) => {
     setOpen(false);
     if (pathname !== "/") {
-      // Route home first, then scroll after navigation.
-      navigate({ to: "/" }).then(() => {
-        // Wait a tick for the home page to mount.
-        setTimeout(() => smoothScroll(id), 60);
-      });
+      // Route home first, then scroll once the section has mounted.
+      navigate({ to: "/" }).then(() => scrollWhenReady(id));
       return;
     }
-    smoothScroll(id);
+    scrollWhenReady(id);
   };
 
   const handleRouteNav = (to: "/journey") => {

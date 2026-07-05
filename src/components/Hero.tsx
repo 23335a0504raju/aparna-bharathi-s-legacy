@@ -178,8 +178,8 @@ export default function Hero() {
           />
         </div>
 
-        {/* Kinetic headline overlapping portraits from below */}
-        <div className="relative z-20 -mt-6 flex w-full flex-col items-center text-center md:-mt-10">
+        {/* Kinetic headline — clears the portraits on mobile, overlaps them on desktop */}
+        <div className="relative z-20 mt-6 flex w-full flex-col items-center text-center md:-mt-10">
           <h1
             className="flex flex-wrap items-center justify-center gap-x-3 gap-y-0 font-serif-display leading-[0.95] tracking-tight"
             style={{

@@ -132,6 +132,57 @@ export default function JourneyTeaser() {
               />
             </motion.svg>
           </motion.div>
+          {/* Mobile cue — sits below the button pointing up at it */}
+          <motion.div
+            aria-hidden
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="pointer-events-none absolute top-full left-6 z-10 mt-2 flex items-end gap-1 sm:hidden"
+          >
+            <motion.svg
+              viewBox="0 0 100 100"
+              className="block w-16"
+              fill="none"
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <motion.path
+                d="M74 96 C 96 70, 86 38, 20 28"
+                stroke={TERRA}
+                strokeWidth="3.2"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 0.9, delay: 0.5, ease: "easeOut" }}
+              />
+              <motion.path
+                d="M38 42 L17 27 L36 14"
+                stroke={TERRA}
+                strokeWidth="3.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 0.3, delay: 1.3 }}
+              />
+            </motion.svg>
+            <p
+              className="font-serif-display mb-1 text-[15px] italic leading-tight"
+              style={{ color: TERRA, transform: "rotate(-4deg)" }}
+            >
+              Click here
+              <span
+                className="font-telugu block not-italic text-[11px]"
+                style={{ color: "rgba(194,94,58,0.8)" }}
+              >
+                నొక్కండి
+              </span>
+            </p>
+          </motion.div>
           <MotionLink
             to="/journey"
             // Soft heartbeat ring radiating from the button's own edge —

@@ -6,8 +6,9 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { ArrowLeft, Cake, Heart, ChevronDown } from "lucide-react";
+import Navbar from "@/components/Navbar";
 import SmartImage from "@/components/SmartImage";
 import LoadingIntro from "@/components/LoadingIntro";
 import {
@@ -56,62 +57,6 @@ function PageProgress() {
       className="fixed inset-x-0 top-0 z-[70] h-[2px] origin-left"
       style={{ scaleX, background: TERRA }}
     />
-  );
-}
-
-/* ---------------- Sticky slim top bar ---------------- */
-function TopBar() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <motion.header
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-x-0 top-0 z-[65] transition-all duration-500"
-      style={{
-        background: scrolled ? "rgba(23,19,15,0.72)" : "transparent",
-        backdropFilter: scrolled ? "blur(16px)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
-        borderBottom: scrolled
-          ? "1px solid rgba(244,237,225,0.08)"
-          : "1px solid transparent",
-      }}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 md:px-10 md:py-4">
-        <Link
-          to="/"
-          className="group inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.28em] transition-opacity hover:opacity-70"
-          style={{ color: CREAM }}
-        >
-          <ArrowLeft
-            size={13}
-            className="transition-transform duration-300 group-hover:-translate-x-1"
-          />
-          <span className="hidden sm:inline">Back to Home</span>
-          <span className="sm:hidden">Home</span>
-        </Link>
-
-        <div
-          className="font-sans-ui flex items-center gap-2 text-[13px] font-medium tracking-tight"
-          style={{ color: CREAM }}
-        >
-          <span>Apparao</span>
-          <span style={{ color: TERRA }}>❤</span>
-          <span>Bharathi</span>
-        </div>
-
-        {/* right-side spacer keeps the wordmark centered */}
-        <span className="w-8" aria-hidden />
-      </div>
-    </motion.header>
   );
 }
 
@@ -867,7 +812,8 @@ function JourneyPage() {
         images={[...JOURNEY_CRITICAL_IMAGES, ...JOURNEY_WARM_IMAGES]}
       />
       <PageProgress />
-      <TopBar />
+      {/* Shared navbar so the menu (and mobile hamburger) works here too */}
+      <Navbar />
       <main>
         <Hero />
         <Timeline />

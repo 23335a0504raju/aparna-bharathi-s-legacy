@@ -151,7 +151,7 @@ export default function Gallery() {
                 close();
               }}
               aria-label="Close"
-              className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full border transition hover:scale-105 md:right-8 md:top-8"
+              className="absolute right-4 top-4 z-20 grid h-10 w-10 place-items-center rounded-full border transition hover:scale-105 md:right-8 md:top-8"
               style={{
                 borderColor: "rgba(244,237,225,0.2)",
                 color: "#F4EDE1",
@@ -168,7 +168,7 @@ export default function Gallery() {
                 prev();
               }}
               aria-label="Previous"
-              className="absolute left-2 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border transition hover:scale-105 md:left-8"
+              className="absolute left-2 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border transition hover:scale-105 md:left-8"
               style={{
                 borderColor: "rgba(244,237,225,0.2)",
                 color: "#F4EDE1",
@@ -185,7 +185,7 @@ export default function Gallery() {
                 next();
               }}
               aria-label="Next"
-              className="absolute right-2 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border transition hover:scale-105 md:right-8"
+              className="absolute right-2 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border transition hover:scale-105 md:right-8"
               style={{
                 borderColor: "rgba(244,237,225,0.2)",
                 color: "#F4EDE1",
@@ -201,7 +201,15 @@ export default function Gallery() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.98 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative max-h-[85vh] max-w-[92vw] overflow-hidden rounded-xl md:max-w-[80vw]"
+              // swipe left/right to browse photos
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.18}
+              onDragEnd={(_, info) => {
+                if (info.offset.x < -70) next();
+                else if (info.offset.x > 70) prev();
+              }}
+              className="relative max-h-[85vh] max-w-[92vw] cursor-grab overflow-hidden rounded-xl active:cursor-grabbing md:max-w-[80vw]"
               onClick={(e) => e.stopPropagation()}
             >
               <SmartImage
