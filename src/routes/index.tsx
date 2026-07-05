@@ -19,6 +19,7 @@ function Index() {
   return (
     <div className="relative w-full overflow-x-hidden">
       <LoadingIntro
+        id="home"
         images={HOME_CRITICAL_IMAGES}
         warmAfter={HOME_WARM_IMAGES}
       />

@@ -860,11 +860,11 @@ function JourneyPage() {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="relative w-full overflow-x-hidden"
     >
-      {/* Shows only on a direct visit to /journey — skipped (but still
-          warms images) when navigating from the home page. */}
+      {/* First visit to /journey (direct or via navigation): block until
+          every journey image is ready, so the timeline appears complete. */}
       <LoadingIntro
-        images={JOURNEY_CRITICAL_IMAGES}
-        warmAfter={JOURNEY_WARM_IMAGES}
+        id="journey"
+        images={[...JOURNEY_CRITICAL_IMAGES, ...JOURNEY_WARM_IMAGES]}
       />
       <PageProgress />
       <TopBar />

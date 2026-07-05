@@ -11,11 +11,14 @@ const INTRO_PHOTO = {
   alt: "Apparao and Bharathi on their wedding day, 25 April 1999",
 };
 
-// Module-scoped so the intro shows once per full page load, but is skipped
-// on client-side navigations (e.g. Home -> Journey and back).
-let introAlreadyShown = false;
+// Module-scoped so each page's intro shows once per full page load —
+// revisiting the same page via client-side navigation skips it, but each
+// page (home, journey) gets its own first-visit loader.
+const shownIntros = new Set<string>();
 
 interface LoadingIntroProps {
+  /** Identifies which page this intro belongs to (shown once per page). */
+  id?: string;
   /** Images that must be loaded before the loader exits. */
   images?: string[];
   /** Images to warm quietly in the background once the loader is gone. */
@@ -27,15 +30,16 @@ interface LoadingIntroProps {
 }
 
 export default function LoadingIntro({
+  id = "global",
   images = [],
   warmAfter = [],
   minMs = 2200,
   maxMs = 8000,
 }: LoadingIntroProps) {
-  // Server render + first client render both show the intro on a fresh page
-  // load; on client-side navigation the flag is already set and we skip it.
+  // Server render + first client render both show the intro the first time a
+  // page is visited; revisits via client-side navigation skip it.
   const [show, setShow] = useState(
-    () => typeof window === "undefined" || !introAlreadyShown
+    () => typeof window === "undefined" || !shownIntros.has(id)
   );
   const [progress, setProgress] = useState(images.length === 0 ? 1 : 0);
   const [photoReady, setPhotoReady] = useState(false);
@@ -46,13 +50,13 @@ export default function LoadingIntro({
   useEffect(() => {
     // ownsIntroRef keeps dev strict-mode's effect re-run from treating our
     // own first run as "already shown" and hiding the intro instantly.
-    if (introAlreadyShown && !ownsIntroRef.current) {
-      // Skipped intro (client-side nav) — still warm this page's images.
+    if (shownIntros.has(id) && !ownsIntroRef.current) {
+      // Skipped intro (revisit) — still warm this page's images.
       setShow(false);
       warmImages([...images, ...warmRef.current]);
       return;
     }
-    introAlreadyShown = true;
+    shownIntros.add(id);
     ownsIntroRef.current = true;
 
     let done = false;
